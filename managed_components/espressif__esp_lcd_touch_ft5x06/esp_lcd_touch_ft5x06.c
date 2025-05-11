@@ -70,7 +70,7 @@ static const char *TAG = "FT5x06";
 #define FT5x06_ID_G_MODE                (0xA4)
 #define FT5x06_ID_G_PMODE               (0xA5)
 #define FT5x06_ID_G_FIRMID              (0xA6)
-#define FT5x06_ID_G_STATE               (0xBC)
+#define FT5x06_ID_G_STATE               (0xA7)
 #define FT5x06_ID_G_FT5201ID            (0xA8)
 #define FT5x06_ID_G_ERR                 (0xA9)
 
@@ -176,8 +176,6 @@ static esp_err_t esp_lcd_touch_ft5x06_read_data(esp_lcd_touch_handle_t tp)
     assert(tp != NULL);
 
     err = touch_ft5x06_i2c_read(tp, FT5x06_TOUCH_POINTS, &points, 1);
-    //ESP_LOGI("TOUCH: ", "Num poaints: %d",  points);
-    //vTaskDelay(1000 / portTICK_PERIOD_MS);
     ESP_RETURN_ON_ERROR(err, TAG, "I2C read error!");
 
     if (points > 5 || points == 0) {
@@ -261,16 +259,12 @@ static esp_err_t esp_lcd_touch_ft5x06_del(esp_lcd_touch_handle_t tp)
 /*******************************************************************************
 * Private API function
 *******************************************************************************/
-//const char *TAG = "TOUCH";
+
 static esp_err_t touch_ft5x06_init(esp_lcd_touch_handle_t tp)
 {
     esp_err_t ret = ESP_OK;
-    uint8_t data[32];
-    
-    touch_ft5x06_i2c_read(tp, FT5x06_ID_G_FT5201ID, data, 1);
-    ESP_LOGW(TAG, " id %d", data[0]);
 
-    //Valid touching detect threshold
+    // Valid touching detect threshold
     ret |= touch_ft5x06_i2c_write(tp, FT5x06_ID_G_THGROUP, 70);
 
     // valid touching peak detect threshold
@@ -296,9 +290,6 @@ static esp_err_t touch_ft5x06_init(esp_lcd_touch_handle_t tp)
 
     // Timer to enter 'idle' when in 'Monitor' (ms)
     ret |= touch_ft5x06_i2c_write(tp, FT5x06_ID_G_PERIODMONITOR, 40);
-
-    //FT5x06_ID_G_CIPHER
-    //ret |= touch_ft5x06_i2c_read(tp, FT5x06_ID_G_CIPHER, 40);
 
     return ret;
 }

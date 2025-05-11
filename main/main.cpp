@@ -8,6 +8,8 @@
 #include "esp_console.h"
 
 #include "ui/ui.h"
+#include "screens.h"
+#include "images.h"
 
 #include "FFat.h"
 #include <WiFi.h>
@@ -16,8 +18,16 @@
 
 static const char *TAG = "example";
 
+lv_chart_series_t *ser2;
+
 void action_inc_counter(lv_event_t *e) {
     
+}
+
+void action_update_chart(lv_event_t *e) {
+  int32_t val = lv_slider_get_value(objects.slider1);
+  lv_chart_set_next_value(objects.chart, ser2, val);
+  //Serial.println("update " + String(val));
 }
 
 
@@ -58,16 +68,30 @@ void listDir(fs::FS &fs, const char *dirname, uint8_t levels = -1) {
         listDir(fs, file.path(), levels - 1);
       }
     } else {
-      //Serial.print("  FILE: ");
-      //Serial.print(file.path());
-      //Serial.print("\tSIZE: ");
-      //Serial.println(file.size());
+      Serial.print("  FILE: ");
+      Serial.print(file.path());
+      Serial.print("\tSIZE: ");
+      Serial.println(file.size());
       server.serveStatic(file.path(), FFat, file.path());
     }
     file = root.openNextFile();
   }
 }
 
+void click_cb(lv_event_t *e)
+{
+  Serial.println("click");
+  lv_obj_t *target = (lv_obj_t *)lv_event_get_target(e);
+
+  lv_obj_t *child = lv_obj_get_child(target, 0);
+  while(child) {
+    if( lv_obj_check_type(child, &lv_label_class) ){
+      Serial.println( lv_label_get_text(child));
+    }
+    
+    child = lv_obj_get_child(target, lv_obj_get_index(child)+1);
+  }
+}
 
 void setup()
 {
@@ -85,6 +109,53 @@ void setup()
     
     ui_init();
 
+    lv_obj_t *chart = objects.chart;
+
+    lv_chart_set_range(chart, LV_CHART_AXIS_PRIMARY_Y, 0, 100);
+    lv_chart_set_point_count(chart, 20);
+
+    ser2 = lv_chart_add_series(chart, lv_palette_main(LV_PALETTE_BLUE), LV_CHART_AXIS_PRIMARY_Y);
+
+    lv_chart_set_next_value(chart, ser2, 50);
+    lv_chart_set_next_value(chart, ser2, 40);
+    lv_chart_set_next_value(chart, ser2, 30);
+    lv_chart_set_next_value(chart, ser2, 20);
+    lv_chart_set_next_value(chart, ser2, 10);
+
+    lv_obj_t *panel = objects.folder;
+
+    File root = FFat.open("/assets/js");
+    File file = root.openNextFile();
+
+    //for (size_t i = 0; i < 12; i++)
+    while (file)
+    {
+      lv_obj_t *btn = lv_btn_create(panel);
+
+      lv_obj_set_size(btn, 100, 100);            
+      lv_obj_set_style_bg_opa(btn, 0, 0);
+      //lv_obj_set_style_border_color(btn, {0xFC, 0xC0, 0x74}, 0);
+      //lv_obj_set_style_border_width(btn, 2, 0);
+      lv_obj_set_style_pad_top(btn, 0, 0);
+
+      lv_obj_t *img = lv_image_create(btn);
+      if( file.isDirectory() )
+        lv_image_set_src(img, &img_folder);
+      else
+        lv_image_set_src(img, &img_file);
+
+      lv_obj_align(img, LV_ALIGN_TOP_MID ,0,0);
+
+      lv_obj_t *label = lv_label_create(btn);
+      lv_label_set_text_fmt(label, file.name());
+      lv_obj_align(label, LV_ALIGN_BOTTOM_MID, 0, 0);
+
+      lv_obj_add_event_cb(btn, click_cb, LV_EVENT_CLICKED, NULL);
+
+      file = root.openNextFile();
+
+    }
+    
     
     WiFi.begin("Bussol", "11119999");
 

@@ -8,6 +8,7 @@ extern "C" {
 #endif
 
 extern void action_inc_counter(lv_event_t * e);
+extern void action_update_chart(lv_event_t * e);
 
 
 #ifdef __cplusplus

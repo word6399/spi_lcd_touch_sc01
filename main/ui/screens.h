@@ -22,6 +22,9 @@ typedef struct _objects_t {
     lv_obj_t *obj2;
     lv_obj_t *obj3;
     lv_obj_t *main_label;
+    lv_obj_t *folder;
+    lv_obj_t *chart;
+    lv_obj_t *slider1;
     lv_obj_t *obj4;
 } objects_t;
 
@@ -54,6 +57,12 @@ void tick_user_widget_sidebar(void *flowState, int startWidgetIndex);
 
 void create_user_widget_sadf(lv_obj_t *parent_obj, void *flowState, int startWidgetIndex);
 void tick_user_widget_sadf(void *flowState, int startWidgetIndex);
+
+void create_user_widget_button_folder(lv_obj_t *parent_obj, void *flowState, int startWidgetIndex);
+void tick_user_widget_button_folder(void *flowState, int startWidgetIndex);
+
+void create_user_widget_button_file(lv_obj_t *parent_obj, void *flowState, int startWidgetIndex);
+void tick_user_widget_button_file(void *flowState, int startWidgetIndex);
 
 void tick_screen_by_id(enum ScreensEnum screenId);
 void tick_screen(int screen_index);

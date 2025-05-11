@@ -102,7 +102,6 @@ bool esp_lcd_touch_get_coordinates(esp_lcd_touch_handle_t tp, uint16_t *x, uint1
             y[i] = tmp;
         }
     }
-    
 
     return touched;
 }

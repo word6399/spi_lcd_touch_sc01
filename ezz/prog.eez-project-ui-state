@@ -1,8 +1,8 @@
 {
   "navigation": {
-    "selectedUserPageObject": "[prog.eez-project]:/userPages/3",
+    "selectedUserPageObject": "[prog.eez-project]:/userPages/1",
     "selectedUserWidgetObject": "[prog.eez-project]:/userWidgets/1",
-    "selectedActionObject": "[prog.eez-project]:/actions/0",
+    "selectedActionObject": "[prog.eez-project]:/actions/1",
     "selectedGlobalVariableObject": "[prog.eez-project]:/variables/globalVariables/0",
     "selectedStyleObject": "[prog.eez-project]:/lvglStyles/styles/0",
     "selectedBitmapObject": "[prog.eez-project]:/bitmaps/3",
@@ -129,6 +129,7 @@
                   "type": "tabset",
                   "id": "#f5869185-3bb0-4549-90bd-751b13df474c",
                   "weight": 1,
+                  "selected": 1,
                   "enableClose": false,
                   "children": [
                     {
@@ -195,10 +196,21 @@
               "type": "tabset",
               "id": "EDITORS",
               "weight": 32.84376615572695,
-              "selected": 3,
+              "selected": 2,
               "enableDeleteWhenEmpty": false,
               "enableClose": false,
               "children": [
+                {
+                  "type": "tab",
+                  "id": "#c7434cde-2815-456b-ab1a-ab67659e21cb",
+                  "name": "update_chart",
+                  "component": "editor",
+                  "config": {
+                    "objectPath": "[prog.eez-project]:/actions/1",
+                    "permanent": false
+                  },
+                  "icon": "material:code"
+                },
                 {
                   "type": "tab",
                   "id": "#141621da-27ee-46c7-9b8d-d4b5fa76934f",
@@ -1064,7 +1076,10 @@
       "selection": {
         "0": {
           "0": {},
-          "1": {}
+          "1": {},
+          "3": {
+            "$selected": true
+          }
         },
         "1": {},
         "2": {}
@@ -1074,7 +1089,7 @@
           "x": -299.39976190476193,
           "y": -154.23141269841264
         },
-        "scale": 1.1
+        "scale": 0.8
       },
       "timeline": {
         "isEditorActive": false,
@@ -1106,10 +1121,10 @@
       },
       "transform": {
         "translate": {
-          "x": -240,
-          "y": -218.5
+          "x": -185.07070707070704,
+          "y": 33.20606060606059
         },
-        "scale": 1.1
+        "scale": 0.8
       },
       "timeline": {
         "isEditorActive": false,
@@ -1129,7 +1144,7 @@
           "x": -240,
           "y": -160
         },
-        "scale": 1.1
+        "scale": 0.8
       },
       "timeline": {
         "isEditorActive": false,
@@ -1162,7 +1177,7 @@
           "x": -302.8579545454545,
           "y": -75.31571969696984
         },
-        "scale": 1.1
+        "scale": 0.8
       },
       "timeline": {
         "isEditorActive": false,
@@ -1182,7 +1197,7 @@
           "x": -100,
           "y": -160
         },
-        "scale": 1.1
+        "scale": 0.8
       },
       "timeline": {
         "isEditorActive": false,
@@ -1211,6 +1226,16 @@
         "secondToPx": 200,
         "scrollLeft": 0
       }
+    },
+    "[prog.eez-project]:/actions/1[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1
+      }
     }
   },
   "activeOutputSection": 0,
@@ -1229,12 +1254,10 @@
   "lvglPart": "MAIN",
   "lvglState": "DEFAULT",
   "lvglExpandedPropertiesGroup": [
-    "MISCELLANEOUS",
-    "BACKGROUND",
-    "POSITION AND SIZE"
+    "LAYOUT"
   ],
   "showInactiveFlowsInDebugger": true,
   "globalFlowZoom": true,
-  "flowZoom": 1.1,
+  "flowZoom": 0.8,
   "implementationLanguage": "C"
 }
